@@ -1,0 +1,6 @@
+n_epoch: 2000
+n_batch: 128
+n_images: 1000
+height: 128
+width: 128
+channels: 1
