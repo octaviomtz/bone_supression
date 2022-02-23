@@ -20,19 +20,14 @@ from utils.models import autoencoder
 
 @hydra.main(config_path="config", config_name="config.yaml")
 def main(cfg: DictConfig):
-    
 
-    source, target = load_data(n_images)
+    source, target = load_data(cfg.n_images)
     len(source), source[0].shape
     xray_overview(source, target)
+    img_shape = (cfg.height, cfg.width, cfg.channels)
 
-    img_rows = 128
-    img_cols = 128
-    img_channels = 1
-    img_shape = (img_rows, img_cols, img_channels)
-
-    source = np.array(source).reshape(-1, img_rows, img_cols, img_channels)
-    target = np.array(target).reshape(-1, img_rows, img_cols, img_channels)
+    source = np.array(source).reshape(-1, cfg.height, cfg.width, cfg.channels)
+    target = np.array(target).reshape(-1, cfg.height, cfg.width, cfg.channels)
 
     source_train, source_test, target_train, target_test = train_test_split(source, target,
                                                                             test_size=0.20,
@@ -47,7 +42,7 @@ def main(cfg: DictConfig):
     #%%
     autoencoder_train = autoencoder.fit(source_train, target_train,
                                         epochs = cfg.n_epoch,
-                                        batch_size = n_batch,
+                                        batch_size = cfg.n_batch,
                                         verbose = 1,
                                         validation_data = (source_test, target_test))
 

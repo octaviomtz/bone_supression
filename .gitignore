@@ -1,3 +1,4 @@
 ML-BoneSuppression/
 *.ipynb
 *_inter.py
+*__pycache__*
